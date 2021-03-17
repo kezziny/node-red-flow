@@ -1,0 +1,30 @@
+<script type="text/javascript">
+console.log("register");
+RED.nodes.registerType('flow-is', {
+    "label": function() { if(this.compare_value !== undefined) return 'is ' + this.compare_value; else return "Is what??"; },
+    "category": "flow",
+    "color": "#C0DEED",
+    "icon": "font-awesome/fa-compress",
+    "inputs": 1,
+    "outputs": 1,
+    "paletteLabel": "is",
+	"oneditprepare": () => {$("#node-input-value").typedInput({type:"str", types:["str","num","bool", "json", "msg", "flow", "global"], typeField: "#node-input-value_type" })},
+    "defaults": {
+		"compare_value":{},
+		"value_type": {}
+    }
+});
+</script>
+<script type="text/x-red" data-template-name="flow-is">
+
+<div class="form-row">
+	<label for="node-input-room">
+		<i style="width:20px; text-align:left;" class="icon-tag"></i> 
+		Value
+	</label>
+	<input type="text" id="node-input-compare_value">
+	<input type="hidden" id="node-input-value_type">
+</div>
+
+
+</script>

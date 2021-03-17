@@ -1,0 +1,24 @@
+{
+  "name": "@kezziny/node-red-flow",
+  "version": "1.0.0",
+  "description": "Automation flow handling",
+  "author": "kezziny",
+  "dependencies": {
+  },
+  "node-red": {
+    "nodes": {
+      "flow-extract": "flow/extract/extract.js",
+      "flow-then": "flow/then/then.js",
+      "flow-else": "flow/else/else.js",
+      "flow-is": "flow/is/is.js",
+      "flow-for": "flow/for/for.js",
+      "flow-and": "flow/and/and.js",
+      "flow-or": "flow/or/or.js"
+    }
+  },
+  "keywords": [ "node-red" ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "ISC"
+}

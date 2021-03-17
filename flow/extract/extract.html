@@ -1,0 +1,24 @@
+<script type="text/javascript">
+console.log("register");
+RED.nodes.registerType('flow-extract', {
+    "label": function() { if(this.attribute !== undefined) return '.' + this.attribute; else return "Extract"; },
+    "category": "flow",
+    "color": "#C0DEED",
+    "icon": "font-awesome/fa-external-link",
+    "inputs": 1,
+    "outputs": 1,
+    "paletteLabel": "extract",
+    "defaults": {
+        "attribute":{}
+    }
+});
+</script>
+<script type="text/x-red" data-template-name="flow-extract">
+    <div class="form-row">
+        <label for="node-input-attribute">
+            <i style="width:20px; text-align:left;" class="icon-tag"></i> 
+            Attribute
+        </label>
+        <input type="text" id="node-input-attribute" placeholder=""> 
+    </div>
+</script>
