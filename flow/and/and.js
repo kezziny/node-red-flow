@@ -1,7 +1,6 @@
 let RED;
 const state = module.exports = function(red) {
 	RED = red;
-	console.log("register js");
 	red.nodes.registerType("flow-and", FlowAnd);
 }
 

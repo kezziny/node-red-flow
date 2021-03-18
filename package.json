@@ -1,9 +1,10 @@
 {
   "name": "@kezziny/node-red-flow",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "Automation flow handling",
   "author": "kezziny",
   "dependencies": {
+    "jsonata": "^1.8.4"
   },
   "node-red": {
     "nodes": {
@@ -16,9 +17,20 @@
       "flow-or": "flow/or/or.js"
     }
   },
-  "keywords": [ "node-red" ],
+  "keywords": [
+    "node-red"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kezziny/node-red-flow.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kezziny/node-red-flow/issues"
+  },
+  "homepage": "https://github.com/kezziny/node-red-flow#readme"
 }

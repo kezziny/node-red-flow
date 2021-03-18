@@ -1,7 +1,8 @@
+var jsonata = require("jsonata");
+
 let RED;
 const state = module.exports = function(red) {
 	RED = red;
-	console.log("register js");
 	red.nodes.registerType("flow-is", FlowIs);
 }
 
@@ -20,19 +21,47 @@ class FlowIs {
 			text: ""
 		});
 
-		this.on("input", (msg) => {
-			let data = null;
+		this.compare = (data) => {
+			let msg = data;
+			if (config.attribute !== "") {
+				if (!data.hasOwnProperty(config.attribute)) return null;
+				data = data[config.attribute];
+			}
 
 			switch(config.value_type)
 			{
-				default:
-				case "num": {
-					if (""+msg.payload === config.compare_value)
+				case "jsonata": {
+					let expression = jsonata(config.compare_value);
+					if (expression.evaluate(data)) return msg;
+					else return null;
+				}
+				case "bool": {
+					if (data && "true" === config.compare_value) return msg;
+					else if (!data && "false" === config.compare_value) return msg;
+					else return null;
+				}
+				default: {
+					let compare = config.compare_value;
+					if (config.value_type === "flow")
 					{
-						data = msg.payload;
+						compare = flow.get(compare);
 					}
+					
+					if (config.value_type === "global")
+					{
+						compare = global.get(compare);
+					}
+	
+					if (data === compare) return msg;
+					else return null;
 				}
 			}
+
+			return null;
+		};
+
+		this.on("input", (msg) => {
+			let data = this.compare(msg.payload);
 			
 			if (data !== null) {
 				this.status({

@@ -1,24 +1,33 @@
 <script type="text/javascript">
 console.log("register");
 RED.nodes.registerType('flow-is', {
-    "label": function() { if(this.compare_value !== undefined) return 'is ' + this.compare_value; else return "Is what??"; },
+    "label": function() { if(this.compare_value !== undefined) return this.attribute + ' is ' + this.compare_value; else return "Is what??"; },
     "category": "flow",
     "color": "#C0DEED",
     "icon": "font-awesome/fa-compress",
     "inputs": 1,
     "outputs": 1,
     "paletteLabel": "is",
-	"oneditprepare": () => {$("#node-input-value").typedInput({type:"str", types:["str","num","bool", "json", "msg", "flow", "global"], typeField: "#node-input-value_type" })},
+	"oneditprepare": () => {$("#node-input-compare_value").typedInput({type:"str", types:["str","num","bool", "jsonata", "flow", "global"], typeField: "#node-input-value_type" })},
     "defaults": {
-		"compare_value":{},
-		"value_type": {}
+      "attribute": {value:""},
+  		"compare_value":{},
+  		"value_type": {}
     }
 });
 </script>
 <script type="text/x-red" data-template-name="flow-is">
 
+  <div class="form-row">
+	<label for="node-input-attribute">
+		<i style="width:20px; text-align:left;" class="icon-tag"></i> 
+		Attribute
+	</label>
+	<input type="text" id="node-input-attribute">
+</div>
+
 <div class="form-row">
-	<label for="node-input-room">
+	<label for="node-input-compare_value">
 		<i style="width:20px; text-align:left;" class="icon-tag"></i> 
 		Value
 	</label>
