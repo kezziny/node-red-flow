@@ -1,6 +1,6 @@
 {
   "name": "@kezziny/node-red-flow",
-  "version": "1.0.7",
+  "version": "1.0.10",
   "description": "Automation flow handling",
   "author": "kezziny",
   "dependencies": {
@@ -12,6 +12,8 @@
       "flow-then": "flow/then/then.js",
       "flow-else": "flow/else/else.js",
       "flow-is": "flow/is/is.js",
+      "flow-not": "flow/not/not.js",
+      "flow-null": "flow/null/null.js",
       "flow-for": "flow/for/for.js",
       "flow-and": "flow/and/and.js",
       "flow-or": "flow/or/or.js"
