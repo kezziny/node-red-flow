@@ -69,10 +69,7 @@ class FlowOr {
 					text: ""
 				});
 
-				if (this.State !== payload || payload !== null) {
-					this.State = payload;
-					this.send({payload: payload });
-				}
+				this.send({payload: payload });
 			}
 
 		});

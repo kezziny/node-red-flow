@@ -69,10 +69,8 @@ class FlowAnd {
 					text: ""
 				});
 
-				if (this.State !== payload) {
-					this.State = payload;
-					this.send({payload: payload });
-				}
+				
+				this.send({payload: payload });
 			}
 
 		});

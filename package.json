@@ -1,6 +1,6 @@
 {
   "name": "@kezziny/node-red-flow",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Automation flow handling",
   "author": "kezziny",
   "dependencies": {
