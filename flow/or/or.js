@@ -43,7 +43,13 @@ class FlowOr {
 		
 		RED.hooks.add("preDeliver", (data)=>{
 			if (data.destination.id === this.id) {
-				this.sources[data.source.id] = data.msg.payload;
+				let sourceId = data.source.id;
+				if (!this.sources.hasOwnProperty(data.source.id) && this.sources.hasOwnProperty(data.source.node.z)) {
+					sourceId = data.source.node.z;
+				}
+
+				this.sources[sourceId] = data.msg.payload;
+
 				let numOfNull = 0;
 				this.keys.forEach( (key) => {
 					if (this.sources[key] === null) {
