@@ -12,6 +12,7 @@ class FlowOr {
 		this.config = config;
 
 		this.State = null;
+		this.debounceTimer = null;
 		this.sources = {};
 		RED.nodes.eachNode(node => {
 			if (node.hasOwnProperty("wires"))
@@ -50,26 +51,29 @@ class FlowOr {
 
 				this.sources[sourceId] = data.msg.payload;
 
-				let numOfNull = 0;
-				this.keys.forEach( (key) => {
-					if (this.sources[key] === null) {
-						numOfNull++;
+				if (this.debounceTimer !== null) clearTimeout(this.debounceTimer);
+				this.debounceTimer = setTimeout(() => {
+					let numOfNull = 0;
+					this.keys.forEach( (key) => {
+						if (this.sources[key] === null) {
+							numOfNull++;
+						}
+					});
+	
+					let payload = null;
+					if (numOfNull < this.keys.length)
+					{
+						payload = this.sources;
 					}
-				});
-
-				let payload = null;
-				if (numOfNull < this.keys.length)
-				{
-					payload = this.sources;
-				}
-
-				this.status({
-					fill: (payload === null) ? "red" : "green",
-					shape: (payload === null) ? "ring" : "dot",
-					text: ""
-				});
-
-				this.send({payload: payload });
+	
+					this.status({
+						fill: (payload === null) ? "red" : "green",
+						shape: (payload === null) ? "ring" : "dot",
+						text: ""
+					});
+	
+					this.send({payload: payload });
+				}, 50);
 			}
 
 		});

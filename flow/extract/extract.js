@@ -18,7 +18,7 @@ class FlowExtract {
 		});
 
 		this.on("input", (msg) => {
-			if (msg.payload.hasOwnProperty(config.attribute)) {
+			if (msg.payload && msg.payload.hasOwnProperty(config.attribute)) {
 				this.status({
 					fill: "green",
 					shape: "dot",
