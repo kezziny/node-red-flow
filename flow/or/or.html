@@ -9,9 +9,18 @@ RED.nodes.registerType('flow-or', {
     "outputs": 1,
     "paletteLabel": "or",
     "defaults": {
+		"debounce": {"value": 0}
     }
 });
 </script>
 <script type="text/x-red" data-template-name="flow-or">
+
+	<div class="form-row">
+        <label for="node-input-debounce">
+            <i style="width:20px; text-align:left;" class="icon-tag"></i> 
+            Debounce timeout
+        </label>
+        <input type="number" id="node-input-debounce">
+    </div>
 
 </script>

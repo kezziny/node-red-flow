@@ -4,6 +4,14 @@ const state = module.exports = function(red) {
 	red.nodes.registerType("flow-then", FlowThen);
 }
 
+let parts = [{hour: 'numeric', hour12: false}, {minute: 'numeric'}, {second: 'numeric'}];
+function join(t, a, s) {
+	function format(m) {
+	   let f = new Intl.DateTimeFormat('en', m);
+	   return f.format(t);
+	}
+	return a.map(format).join(s);
+ }
 
 class FlowThen {
 
@@ -16,7 +24,7 @@ class FlowThen {
 		this.status({
 			fill: "red",
 			shape: "ring",
-			text: ""
+			text: join(new Date, parts, ':')
 		});
 
 		this.on("input", (msg) => {
@@ -25,14 +33,27 @@ class FlowThen {
 				this.status({
 					fill: "green",
 					shape: "dot",
-					text: ""
+					text: join(new Date, parts, ':')
 				});
+
+				if (config.output_value !== "") {
+					switch(config.value_type)
+					{
+						case "str": msg.payload = config.output_value; break;
+						case "num": msg.payload = parseInt(config.output_value); break;
+						case "bool": msg.payload = config.output_value === "true"; break;
+						case "json": msg.payload = JSON.parse(config.output_value); break;
+						case "flow": msg.payload = flow.get(config.output_value); break;
+						case "global": msg.payload = global.get(config.output_value); break;
+					}
+				}
+
 				this.send(msg);
 			} else {
 				this.status({
 					fill: "red",
 					shape: "ring",
-					text: ""
+					text: join(new Date, parts, ':')
 				});
 			}
 		});

@@ -1,18 +1,38 @@
 <script type="text/javascript">
 console.log("register");
 RED.nodes.registerType('flow-else', {
-    "label": "else",
+    "label": function() { if (this.name) return this.name; else return "else"; },
     "category": "flow",
     "color": "#C0DEED",
     "icon": "font-awesome/fa-bug",
     "inputs": 1,
     "outputs": 1,
     "paletteLabel": "else",
+    "oneditprepare": () => {$("#node-input-output_value").typedInput({type:"str", types:["str","num","bool", "json", "flow", "global"], typeField: "#node-input-value_type" })},
     "defaults": {
+        "name": {},
+        "output_value":{},
+  		"value_type": {}
     }
 });
 </script>
 <script type="text/x-red" data-template-name="flow-else">
 
+    <div class="form-row">
+        <label for="node-input-name">
+            <i style="width:20px; text-align:left;" class="icon-tag"></i> 
+            Name
+        </label>
+        <input type="text" id="node-input-name">
+    </div>
+    
+    <div class="form-row">
+        <label for="node-input-output_value">
+            <i style="width:20px; text-align:left;" class="icon-tag"></i> 
+            Output
+        </label>
+        <input type="text" id="node-input-output_value">
+        <input type="hidden" id="node-input-value_type">
+    </div>
 
 </script>

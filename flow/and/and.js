@@ -4,6 +4,14 @@ const state = module.exports = function(red) {
 	red.nodes.registerType("flow-and", FlowAnd);
 }
 
+let parts = [{hour: 'numeric', hour12: false}, {minute: 'numeric'}, {second: 'numeric'}];
+function join(t, a, s) {
+	function format(m) {
+	   let f = new Intl.DateTimeFormat('en', m);
+	   return f.format(t);
+	}
+	return a.map(format).join(s);
+ }
 
 class FlowAnd {
 
@@ -39,7 +47,7 @@ class FlowAnd {
 		this.status({
 			fill: "red",
 			shape: "ring",
-			text: ""
+			text: join(new Date, parts, ':')
 		});
 
 		RED.hooks.add("preDeliver", (data)=>{
@@ -69,12 +77,12 @@ class FlowAnd {
 					this.status({
 						fill: (payload === null) ? "red" : "green",
 						shape: (payload === null) ? "ring" : "dot",
-						text: ""
+						text: join(new Date, parts, ':')
 					});
 	
 					
 					this.send({payload: payload });
-				}, 50);
+				}, config.debounce);
 			}
 
 		});

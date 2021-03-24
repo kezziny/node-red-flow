@@ -6,6 +6,14 @@ const state = module.exports = function(red) {
 	red.nodes.registerType("flow-is", FlowIs);
 }
 
+let parts = [{hour: 'numeric', hour12: false}, {minute: 'numeric'}, {second: 'numeric'}];
+function join(t, a, s) {
+	function format(m) {
+	   let f = new Intl.DateTimeFormat('en', m);
+	   return f.format(t);
+	}
+	return a.map(format).join(s);
+ }
 
 class FlowIs {
 
@@ -18,13 +26,13 @@ class FlowIs {
 		this.status({
 			fill: "red",
 			shape: "ring",
-			text: ""
+			text: join(new Date, parts, ':')
 		});
 
 		this.compare = (data) => {
 			let msg = data;
 			if (config.attribute !== "") {
-				if (!data.hasOwnProperty(config.attribute)) return null;
+				if (data === null || !data.hasOwnProperty(config.attribute)) return null;
 				data = data[config.attribute];
 			}
 
@@ -67,13 +75,13 @@ class FlowIs {
 				this.status({
 					fill: "green",
 					shape: "dot",
-					text: ""
+					text: join(new Date, parts, ':')
 				});
 			} else {
 				this.status({
 					fill: "red",
 					shape: "ring",
-					text: ""
+					text: join(new Date, parts, ':')
 				});
 			}
 
